@@ -20,7 +20,7 @@ POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-${POSTGRES_ENV_POSTGRES_PASSWORD}}
 
 export PGPASSWORD="${POSTGRES_PASSWORD}"
 
-BACKUP_CMD="pg_dump -h ${POSTGRES_HOST} -p ${POSTGRES_PORT} -U ${POSTGRES_USER} -f /backup/\${BACKUP_NAME} ${EXTRA_OPTS} ${POSTGRES_DB}"
+BACKUP_CMD="pg_dump -h ${POSTGRES_HOST} -p ${POSTGRES_PORT} -U ${POSTGRES_USER} -f /backup/\${BACKUP_NAME} -F tar ${EXTRA_OPTS} ${POSTGRES_DB}"
 
 echo ${MINIO_HOST}
 if [ -n "${MINIO_HOST}" ]; then
@@ -87,7 +87,7 @@ cat <<EOF >> /backup.sh
 #!/bin/bash
 MAX_BACKUPS=${MAX_BACKUPS}
 
-BACKUP_NAME=\$(date +\%Y.\%m.\%d.\%H\%M\%S).sql
+BACKUP_NAME=\$(date +\%Y.\%m.\%d.\%H\%M\%S).tar
 
 export PGPASSWORD="${POSTGRES_PASSWORD}"
 
